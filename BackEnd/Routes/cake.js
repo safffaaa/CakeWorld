@@ -4,7 +4,7 @@ const router = express.Router()
 
 router.get('/',getCakes)
 router.get('/:id',getCake)
-router.post('/',upload.single('coverImage'),addCake)
+router.post('/',upload.single('file'),addCake)
 router.put('/:id',editCake)
 router.delete('/:id',deleteCake)
 
