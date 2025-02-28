@@ -46,7 +46,7 @@ const userSignUp = async (req, res) => {
 
   const token = jwt.sign({ email, id: newUser._id }, process.env.JWT_TOKEN, {
     expiresIn: "1hr",
-  });
+  })
   return res.status(200).json({ token, user:newUser });
 };
 
