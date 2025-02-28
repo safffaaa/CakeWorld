@@ -1,14 +1,15 @@
 const jwt = require('jsonwebtoken');
 
 const verifyToken = async (req,res,next)=>{
-    let token = req.headers['Authorization']
+    let token = req.headers['authorization']
 
-    if(token){
+    if(token){ 
         token = token.split(" ")[1]
         jwt.verify(token,process.env.JWT_TOKEN,(err,decoded)=>{
             if(err){
                 return res.status(400).json({message : "invalid token"})
             }else {
+                // console.log(decoded)  
                 req.user = decoded
             }
         })

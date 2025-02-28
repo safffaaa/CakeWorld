@@ -169,7 +169,7 @@ section{
 
 
 .modal{
-  position: fixed;
+  position: center;
   top: 34%;
   z-index: 10;
   padding: 2rem;
@@ -189,61 +189,101 @@ section{
   z-index: 9;
 }
 
-.form{
-  width: 71%;
-  margin: 0 auto;
-  text-align: center;
+.form {
+  max-width: 500px;
+  width: 100%;
+  margin-top: 100px;  
+  background: #f5e6dc;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.form-header{
+
+.form-header {
   background-color: #cc9675;
-  height: 3px;
-  text-align: center;
-}
-
-.form-control{
+  height: 40px;
   display: flex;
-  justify-content: space-between;
-  gap:1rem;
-  margin-top: 1rem;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
-.form-control .input{
-  flex-basis: 70%;
-  border:1px solid rgb(156 163 175);
-  border-radius: 4px;
-  height: 30px;
-  padding: 2px;
+.form-control {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1pt;
 }
 
-.form-control .input-textarea{
-  border: 1px solid rgb(156 163 175);
-  border-radius: 4px;
-  flex-basis: 70%;
-  padding: 2px;
+.form-control label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;  
+  display: block;  
+  margin-bottom: 5px;
 }
 
-.form button {
-  margin: 2rem 0;
-  padding: 10px 20px;
+
+.form-control .input,
+.form-control .input-textarea {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border 0.3s ease;
+}
+
+.form-control .input:focus,
+.form-control .input-textarea:focus {
+  border-color: #cc9675;
+  outline: none;
+}
+
+.form-control .input-textarea {
+  resize: vertical;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
   border: none;
   background-color: #cc9675;
-  font-size: 16px; 
-  color: white; 
-  border-radius: 5px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+  color: white;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: all 0.3s ease; 
+  transition: background 0.3s ease;
 }
 
-.form p{
-  cursor: pointer;
-  display: inline;
-  border-bottom: 1px solid #307bbd;
-  color:rga(4,136,170);
-  font-size: 14px;
-  color: #307bbd;
+button:hover {
+  background-color: #b07b5c;
 }
+
+button:active {
+  background-color: #a06d4e;
+}
+
+.form p {
+  cursor: pointer;
+  display: inline-block;
+  border-bottom: 1px solid #307bbd;
+  color: #307bbd;
+  font-size: 14px;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.form p:hover {
+  color: #205a86;
+  border-color: #205a86;
+}
+
 
 .form .error{
   color:red;
@@ -270,6 +310,122 @@ body {
   padding-bottom: 30px; 
 }
 
+.single-recipe-container {
+  width: 60%;
+  margin: 6rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  text-align: center;
+  border-left: 6px solid #cc9675;
+  border-right: 6px solid #cc9675;
+  transition: all 0.3s ease-in-out;
+}
+
+.single-recipe-container:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.single-recipe-container h2 {
+  font-size: 28px;
+  color: #213547;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.single-recipe-container img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.single-recipe-container p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+}
+
+.single-recipe-container strong {
+  color: #cc9675;
+  font-weight: 600;
+}
+
+.ingredients-list,
+.instructions {
+  text-align: left;
+  background-color: #f8f8f8;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ingredients-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.ingredients-list ul li {
+  padding: 5px 0;
+  color: #333;
+  font-weight: 500;
+}
+
+.instructions p {
+  color: #444;
+}
+
+.back-button {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 10px 20px;
+  border: none;
+  background-color: #cc9675;
+  font-size: 16px;
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.back-button:hover {
+  background-color: #b67e60;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .single-recipe-container {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .single-recipe-container h2 {
+    font-size: 22px;
+  }
+
+  .single-recipe-container img {
+    max-width: 250px;
+  }
+
+  .single-recipe-container p {
+    font-size: 14px;
+  }
+
+  .back-button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+
 .footer {
   width: 100vw;
   height: 20px;
@@ -282,6 +438,89 @@ body {
   font-size: 14px;
   padding-top: 2px;
   z-index: 1000;  
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
+}
+
+
+.profile-container {
+  width: 40%;
+  margin: 6rem auto;
+  padding: 1rem;
+  background-color: #8b451323;
+  box-shadow: 0 4px 8px rgba(123, 63, 0, 0.2); 
+  border-radius: 20px;
+  text-align: center;
+  border-left: 6px solid #8b451377; 
+  border-right: 6px solid #8b451377;
+  transition: all 0.3s ease-in-out;
+}
+.profile-container:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(123, 63, 0, 0.3);
+}
+
+.profile-image {
+  width: 150px;   /* Adjust as needed */
+  height: 150px;  /* Adjust as needed */
+  object-fit: cover; /* Ensures the image maintains aspect ratio */
+  border-radius: 50%; /* Makes the image round */
+}
+
+.icon {
+  font-size: 100px; 
+  color: #183232b5;  
+  margin-bottom: 10px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+label {
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.input:focus {
+  border-color: #4CAF50;
+  outline: none;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+
+@media (max-width: 400px) {
+  .profile-container {
+      width: 90%;
+      padding: 20px;
+  }
 }
 
 

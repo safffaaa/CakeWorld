@@ -1,11 +1,29 @@
 import axios from 'axios'
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
-export default function AddRecipe() {
+export default function EditRecipe() {
     const [recipeData, setRecipeData] = useState({})
     const navigate = useNavigate()
-    
+    const {id} = useParams()
+
+    useEffect(()=>{
+        const getData = async () =>{
+            await axios.get(`http://localhost:8000/cakes/${id}`)
+            .then(response =>{
+                let res = response.data
+                setRecipeData({
+                    title : res.title,
+                    ingredients : res.ingredients.join(","),
+                    instruction : res.instruction,
+                    time : res.time
+
+                })
+            })
+        }
+        getData()
+    },[])
+
     const onHandleChange = (e) => {
         // console.log(e.target.files[0])
         let val = (e.target.name === "ingredients") ? e.target.value.split(",") : (e.target.name === "file") ? e.target.files[0] : e.target.value
@@ -14,13 +32,13 @@ export default function AddRecipe() {
     const onHandleSubmit = async (e) => {
         e.preventDefault()
         console.log(recipeData) 
-        await axios.post("http://localhost:8000/cakes", recipeData,{
+        await axios.put(`http://localhost:8000/cakes/${id}`, recipeData,{
             headers:{
                 'Content-Type':'multipart/form-data',
                 'authorization':'bearer '+localStorage.getItem("token")
             }
         })
-        .then(() => navigate("/"))
+        .then(() => navigate("/MyRecipe"))
         .catch(err => console.log(err));
     }
     return (
@@ -29,25 +47,25 @@ export default function AddRecipe() {
                 <form className='form' onSubmit={onHandleSubmit}>
                     <div className='form-control'>
                         <label>Title</label>
-                        <input type="text" className='input' name="title" onChange={onHandleChange}></input>
+                        <input type="text" className='input' name="title" onChange={onHandleChange} value={recipeData.title}></input>
                     </div>
                     <div className='form-control'>
                         <label>Time</label>
-                        <input type="text" className='input' name="time" onChange={onHandleChange}></input>
+                        <input type="text" className='input' name="time" onChange={onHandleChange}  value={recipeData.time}></input>
                     </div>
                     <div className='form-control'>
                         <label>Ingredients</label>
-                        <textarea type="text" className='input-textarea' name="ingredients" rows="5" onChange={onHandleChange}></textarea>
+                        <textarea type="text" className='input-textarea' name="ingredients" rows="5" onChange={onHandleChange} value={recipeData.ingredients}></textarea>
                     </div>
                     <div className='form-control'>
                         <label>Instructions</label>
-                        <textarea type="text" className='input-textarea' name="instruction" rows="5" onChange={onHandleChange}></textarea>
+                        <textarea type="text" className='input-textarea' name="instruction" rows="5" onChange={onHandleChange} value={recipeData.instruction}></textarea>
                     </div>
                     <div className='form-control'>
                         <label>Recipe Image</label>
                         <input type="file" className='input' name="file" onChange={onHandleChange}></input>
                     </div>
-                    <button type="submit">Add Recipe</button>
+                    <button type="submit">Edit Recipe</button>
                 </form>
             </div>
         </>

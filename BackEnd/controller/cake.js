@@ -1,11 +1,11 @@
 
 const cakes = require('../schema/cakeSchema');
-const  multer = require('multer')
+const multer = require('multer')
 
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, './public/images')
+      cb(null, './public/images') 
     },
     filename: function (req, file, cb) {
       const filename = Date.now() + '-' + file.fieldname
@@ -40,7 +40,9 @@ const getCake = async (req, res) => {
 
 // Add a new cake
 const addCake = async (req, res) => {
-  // console.log(req.user,'------------------->>>>>>>>>>>')
+
+  console.log(req.file) 
+  console.log(req.user,'------->.')
   const { title, ingredients, instruction, time } = req.body;
  
   if (!title || !ingredients || !instruction ) {
@@ -52,9 +54,9 @@ const addCake = async (req, res) => {
       title,
       ingredients,
       instruction,
-      time,
-      coverImage : req.file.filename,
-      // createdBy:req.user.id
+      time, 
+      coverImage:req.file.filename,
+      createdBy:req.user.id
 
     });
     console.log("Recipe added:", newCakes);
@@ -73,8 +75,8 @@ const editCake = async (req, res) => {
     if (!sweet) {
       return res.status(404).json({ message: 'Cake not found' });
     }
-
-    const updatedCake = await cakes.findByIdAndUpdate(req.params.id, { title, ingredients, instruction, time }, { new: true });
+    let coverImage = req.file?.filename? req.file?.filename : sweet.coverImage
+    const updatedCake = await cakes.findByIdAndUpdate(req.params.id, {...req.body,coverImage}, {title,ingredients,instruction,time} , { new: true });
     return res.json(updatedCake);
   } catch (error) {
     return res.status(500).json({ message: 'Error updating cake', error: error.message });

@@ -5,16 +5,29 @@ import axios from "axios";
 import Home from "./pages/Home";
 import AddRecipe from "./pages/AddRecipe";
 import Mainnav from "./components/Mainnav";
+import EditRecipe from "./pages/EditRecipe";
+import SingleRecipe from "./pages/SingleRecipe";
+import Profile from "./pages/Profile";
 
 const getAllflavr = async () => {
   try {
-    const res = await axios.get("http://localhost:3001/cakes");
+    const res = await axios.get("http://localhost:8000/cakes");
     return res.data; 
   } catch (error) {
     console.error("Error fetching data:", error);
     return []; 
   }
 };
+
+const getMyRecipe = async()=>{
+   let user = JSON.parse(localStorage.getItem("user"))
+   const allRecipe = await getAllflavr()
+   return allRecipe.filter(item => item.createdBy === user._id)
+}
+
+const MyFavItem = async ()=>{
+  return JSON.parse(localStorage.getItem("fav"))
+}
 
 const Layout = ({ children }) => {
   return (
@@ -42,6 +55,7 @@ const router = createBrowserRouter([
         <Home />
       </Layout>
     ),
+    loader : getMyRecipe,
   },
   {
     path: "/MyFav",
@@ -50,6 +64,7 @@ const router = createBrowserRouter([
         <Home />
       </Layout>
     ),
+    loader : MyFavItem,
   },
   {
     path: "/addCakes",
@@ -59,6 +74,30 @@ const router = createBrowserRouter([
       </Layout>
     ),
   },
+  {
+    path: "/editRecipe/:id",
+    element:(
+      <Layout>
+        <EditRecipe/>
+      </Layout>
+    )
+  },
+  {
+    path:"/sigleCake/:id",
+    element:(
+      <Layout>
+        <SingleRecipe/>
+      </Layout>
+    )
+  },
+  {
+    path:"/Profile/:id",
+    element:(
+      <Layout>
+        <Profile/>
+      </Layout>
+    )
+  }
 ]);
 
 function App() {
